@@ -1,13 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-
+using System.Collections.Generic;
+using NestedViewModelsBinding.Models;
 namespace NestedViewModelsBinding.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
@@ -21,55 +21,42 @@ namespace NestedViewModelsBinding.Controllers
         [HttpGet]
         public IActionResult Test()
         {
-            var viewModel = new DtoA
-                            {
-                                Id = 3,
-                                DtoBs = new[]
-                                        {
-                                            new DtoB { Id = 4, },
-                                            new DtoB
-                                            {
-                                                Id = 5,
-                                                DtoCs = new[]
-                                                        {
-                                                            new DtoC { Id = 5 },
-                                                            new DtoC { Id = 6 },
-                                                        }
-                                            },
-                                        }
-                            };
+            Dto viewModel = new Dto
+            {
+                Id = "A",
+                Value = 1,
+                Children = {
+                    new Dto {
+                        Id = "B",
+                        Value = 4,
+                    },
+                    new Dto {
+                        Id="C",
+                        Value= 2,
+                        Children = {
+                            new Dto {
+                                Id = "D",
+                                Value = 5 },
+                            new Dto {
+                                Id = "E",
+                                Value = 6
+                            }
+                        }
+                    }
+                }
+            };
 
             return View(viewModel);
         }
 
         [HttpPost]
         [ActionName("Test")]
-        public IActionResult PostTest(DtoA dtoA)
+        public IActionResult PostTest([FromForm] Dto dto)
         {
-            return View(dtoA);
+            _logger.LogInformation("get dto" + System.Text.Json.JsonSerializer.Serialize(dto));
+            return View(dto);
         }
     }
 
-    public class DtoA
-    {
-        [Range(1, 2, ErrorMessage = "{0} 要介於 {1} 及 {2} 之間")]
-        public int Id { get; set; }
-
-        public DtoB[] DtoBs { get; set; }
-    }
-
-
-    public class DtoB
-    {
-        [Range(1, 2, ErrorMessage = "{0} 要介於 {1} 及 {2} 之間")]
-        public int Id { get; set; }
-
-        public DtoC[] DtoCs { get; set; }
-    }
-
-    public class DtoC
-    {
-        [Range(1, 2, ErrorMessage = "{0} 要介於 {1} 及 {2} 之間")]
-        public int Id { get; set; }
-    }
+    
 }

@@ -1,0 +1,12 @@
+﻿@model NestedViewModelsBinding.Models.Dto
+@{
+    var index = ViewData["index"];
+}
+<input type="hidden" asp-for="Id" />
+<label>@Model.Id</label>: <input asp-for="Value" />
+<fieldset>
+    <span asp-for="@Model.Id"></span>
+    @for (var i = 0; i < Model.Children.Count; i++) {
+        <Partial name="Dto" for="@Model.Children[i]" />
+    }
+</fieldse>

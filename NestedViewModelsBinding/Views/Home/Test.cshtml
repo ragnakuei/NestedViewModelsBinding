@@ -1,5 +1,4 @@
-﻿@model NestedViewModelsBinding.Controllers.DtoA
-
+﻿@model NestedViewModelsBinding.Models.Dto
 @{
     ViewData["Title"] = "Test";
 }
@@ -7,13 +6,8 @@
 
 <form method="post"
       asp-action="Test">
-    <p>
-        <input asp-for="Id">
-    </p>
-    @if (Model.DtoBs?.Length > 0)
-    {
-         // TODO
-    }
+    
+        <Partial name="Dto" for="@Model" />
 
     <input type="submit"
            value="Submit" />
