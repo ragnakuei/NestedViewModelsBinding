@@ -1,0 +1,18 @@
+@model NestedViewModelsBinding.Controllers.DtoB[]
+
+@if (Model?.Length > 0)
+{
+
+    for (var bIndex = 0; bIndex < Model.Length; bIndex++)
+    {
+        <p>
+            <input asp-for="@Model[bIndex].Id">
+        </p>
+
+        if (Model[bIndex].DtoCs?.Length > 0)
+        {
+            <partial name="_DtoCs"
+                     for="@Model[bIndex].DtoCs" />
+        }
+    }
+}

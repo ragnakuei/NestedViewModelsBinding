@@ -1,0 +1,11 @@
+@model NestedViewModelsBinding.Controllers.DtoC[]
+
+@if (Model?.Length > 0)
+{
+    for (var cIndex = 0; cIndex < Model.Length; cIndex++)
+    {
+        <p>
+            <input asp-for="@Model[cIndex].Id">
+        </p>
+    }
+}

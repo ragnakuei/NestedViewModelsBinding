@@ -32,8 +32,8 @@ namespace NestedViewModelsBinding.Controllers
                                                 Id = 5,
                                                 DtoCs = new[]
                                                         {
-                                                            new DtoC { Id = 5 },
                                                             new DtoC { Id = 6 },
+                                                            new DtoC { Id = 7 },
                                                         }
                                             },
                                         }

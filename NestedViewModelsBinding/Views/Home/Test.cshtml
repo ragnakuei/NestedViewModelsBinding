@@ -10,10 +10,9 @@
     <p>
         <input asp-for="Id">
     </p>
-    @if (Model.DtoBs?.Length > 0)
-    {
-         // TODO
-    }
+
+    <partial name="_DtoBs"
+             for="DtoBs" />
 
     <input type="submit"
            value="Submit" />
